@@ -10,7 +10,10 @@ class ErrorWithStatus {
 }
 
 const defaultsErrorHandler = (err, req, res, next) => {
-    res.status(err.status || 500).json(omit(err, "status"));
+    console.log(err);
+    res.status(err.status || 500).json({
+        message: err.message,
+    });
 };
 
 const catchError = (func) => {

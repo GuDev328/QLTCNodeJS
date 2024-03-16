@@ -4,6 +4,7 @@ const session = require("express-session");
 const db = require("./services/dbServices");
 const { defaultsErrorHandler } = require("./utils/errorHandler");
 const userRouter = require("./routers/userRouter");
+const walletRouter = require("./routers/walletRouter");
 const { config } = require("dotenv");
 config();
 const app = express();
@@ -21,6 +22,7 @@ app.use(cors());
 
 db.connect();
 app.use("/api/user", userRouter);
+app.use("/api/wallet", walletRouter);
 
 app.use(defaultsErrorHandler);
 const port = process.env.PORT || 3001;
