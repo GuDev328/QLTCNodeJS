@@ -4,9 +4,10 @@ const spendingSchema = new mongoose.Schema({
     wallet_id: { type: mongoose.Schema.Types.ObjectId, required: true },
     description: { type: String },
     money: { type: Number, required: true },
-    SpendingCategories: {
+    category_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
+        ref: "SpendingCategories",
     },
     date: { type: String, required: true },
 });

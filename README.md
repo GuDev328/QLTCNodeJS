@@ -61,3 +61,22 @@
         }
 
 -   [GET]"http://localhost:3001/api/wallet/get-all"
+
+### Catagories Api
+
+-   [POST]"http://localhost:3001/api/categories/create"
+
+    -   Lưu ý: Data gửi lên là dạng formdata chứ không phải json như các api khác
+    -   formdata: {  
+        "image": file ảnh,  
+        "name": "Ăn uống",  
+        "type": 1 (0 for In, 1 for Out, 2 for Transfer, 3 for loan,4 for in debt),  
+        }
+
+-   [POST]"http://localhost:3001/api/categories/delete"
+
+    -   body: {  
+        "category_id": "65f58d456e68dfb6cbbad515",  
+        }
+
+-   [GET]"http://localhost:3001/api/categories/get-all"

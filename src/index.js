@@ -5,6 +5,7 @@ const db = require("./services/dbServices");
 const { defaultsErrorHandler } = require("./utils/errorHandler");
 const userRouter = require("./routers/userRouter");
 const walletRouter = require("./routers/walletRouter");
+const categoriesRouter = require("./routers/categoriesRouter");
 const { config } = require("dotenv");
 config();
 const app = express();
@@ -23,6 +24,7 @@ app.use(cors());
 db.connect();
 app.use("/api/user", userRouter);
 app.use("/api/wallet", walletRouter);
+app.use("/api/categories", categoriesRouter);
 
 app.use(defaultsErrorHandler);
 const port = process.env.PORT || 3001;
