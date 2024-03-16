@@ -4,7 +4,7 @@ const walletServices = require("../services/walletServices");
 class WalletController {
     async createWallet(req, res) {
         const payload = {
-            user_id: new mongoose.Types.ObjectId(req.body.user_id),
+            user_id: new mongoose.Types.ObjectId(req.user_id),
             name: req.body.name,
             description: req.body.description,
             money: req.body.money,
@@ -19,7 +19,7 @@ class WalletController {
     async deleteWallet(req, res) {
         const payload = {
             wallet_id: new mongoose.Types.ObjectId(req.body.wallet_id),
-            user_id: new mongoose.Types.ObjectId(req.body.user_id),
+            user_id: new mongoose.Types.ObjectId(req.user_id),
         };
         await walletServices.deleteWallet(payload);
         res.status(200).json({
@@ -30,7 +30,7 @@ class WalletController {
     async updateWallet(req, res) {
         const payload = {
             wallet_id: new mongoose.Types.ObjectId(req.body.wallet_id),
-            user_id: new mongoose.Types.ObjectId(req.body.user_id),
+            user_id: new mongoose.Types.ObjectId(req.user_id),
             name: req.body.name,
             description: req.body.description,
             money: req.body.money,
@@ -44,7 +44,7 @@ class WalletController {
 
     async getAllWallet(req, res) {
         const payload = {
-            user_id: new mongoose.Types.ObjectId(req.body.user_id),
+            user_id: new mongoose.Types.ObjectId(req.user_id),
         };
         const result = await walletServices.getAllWallets(payload);
         res.status(200).json({

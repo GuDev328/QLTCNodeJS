@@ -38,7 +38,6 @@
 -   [POST]"http://localhost:3001/api/wallet/create"
 
     -   body: {  
-        "user_id": "65f47f28176d36a885a23da2",  
         "name": "Ví 1",  
         "description": "Đây là ví 1",  
         "money": 200000,  
@@ -49,7 +48,6 @@
 
     -   body: {  
         "wallet_id": "65f549a7bb75a2469271276d",  
-        "user_id": "65f47f28176d36a885a23da2",  
         "name": "Ví 1",  
         "description": "Đây là ví 1",  
         "money": 200000,  
@@ -60,11 +58,6 @@
 
     -   body: {  
         "wallet_id": "65f549a7bb75a2469271276d",  
-        "user_id": "65f47f28176d36a885a23da2"  
         }
 
 -   [GET]"http://localhost:3001/api/wallet/get-all"
-
-    -   body: {  
-        "user_id": "65f47f28176d36a885a23da2"  
-        }

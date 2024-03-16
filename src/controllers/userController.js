@@ -22,7 +22,7 @@ class UserController {
             password: req.body.password,
         };
         const result = await userService.login(payload);
-        req.session.loggedIn = true;
+        req.session.userId = result._id;
         res.status(200).json({
             result,
             message: "Đăng nhập thành công",
