@@ -5,14 +5,7 @@ const Spending = require("../models/spendingSchema");
 
 class CategoriesServices {
     async createCategory(payload) {
-        const { name, global, user_id, type, image } = payload;
-        const category = new SpendingCategories({
-            name,
-            global,
-            user_id,
-            type,
-            image,
-        });
+        const category = new SpendingCategories(payload);
         await category.save();
         return;
     }

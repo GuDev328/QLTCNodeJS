@@ -9,7 +9,6 @@ const router = Router();
 router.post(
     "/create",
     isLoggedIn,
-    uploadImageMiddleware,
     catchError(categoriesController.createCategory)
 );
 

@@ -6,6 +6,7 @@ const { defaultsErrorHandler } = require("./utils/errorHandler");
 const userRouter = require("./routers/userRouter");
 const walletRouter = require("./routers/walletRouter");
 const categoriesRouter = require("./routers/categoriesRouter");
+const spendingRouter = require("./routers/spendingRouter");
 const { config } = require("dotenv");
 config();
 const app = express();
@@ -19,12 +20,13 @@ app.use(
 );
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 db.connect();
 app.use("/api/user", userRouter);
 app.use("/api/wallet", walletRouter);
 app.use("/api/categories", categoriesRouter);
+app.use("/api/spending", spendingRouter);
 
 app.use(defaultsErrorHandler);
 const port = process.env.PORT || 3001;

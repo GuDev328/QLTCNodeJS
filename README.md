@@ -21,7 +21,8 @@
         "name": "Đạgggggt",  
         "phone_number": "0123456789",  
         "birthday": "13/12/2022",  
-        "gender": 1  
+        "gender": 1,
+        "address": "01"
         }
 
 -   [POST]"http://localhost:3001/api/user/login"
@@ -32,6 +33,25 @@
         }
 
 -   [POST]"http://localhost:3001/api/user/logout"
+
+### User Api
+
+-   [POST]"http://localhost:3001/api/user/forgot-password"
+
+    -   body: {  
+        "email": "datt@gmail.com",  
+        }
+
+-   [POST]"http://localhost:3001/api/user/reset-password"
+
+    -   body: {  
+        "email": "datt@gmail.com",  
+        "token": "dvnsjkhfcnjkacsu\xfmanct9sxxigmxuieo",  
+        "password": "123456"  
+        }
+
+-   [GET]"http://localhost:3001/api/user/get-all-user"
+-   [GET]"http://localhost:3001/api/user/get-list-province"
 
 ### Wallet Api
 
@@ -66,17 +86,32 @@
 
 -   [POST]"http://localhost:3001/api/categories/create"
 
-    -   Lưu ý: Data gửi lên là dạng formdata chứ không phải json như các api khác
-    -   formdata: {  
-        "image": file ảnh,  
+    -   body: {  
+        "image": "Link file ảnh",  
         "name": "Ăn uống",  
-        "type": 1 (0 for In, 1 for Out, 2 for Transfer, 3 for loan,4 for in debt),  
+        "type": 1 (0 for In, 1 for Out),  
         }
 
 -   [POST]"http://localhost:3001/api/categories/delete"
 
     -   body: {  
         "category_id": "65f58d456e68dfb6cbbad515",  
+        }
+
+-   [GET]"http://localhost:3001/api/categories/get-all"
+
+### Spending Api
+
+-   [POST]"http://localhost:3001/api/spending/create"
+
+    -   body: {  
+         wallet_id: "65f549a7bb75a2469271276d",  
+         description: "Uống ...",  
+         with_people: "",  
+         money: 50000,  
+         to_wallet_id: "65f549a7bb75a2469271276d"  
+         category_id: "65f549a7bb75a2469271276d",  
+         date: "13/12/2022",  
         }
 
 -   [GET]"http://localhost:3001/api/categories/get-all"

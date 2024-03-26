@@ -27,20 +27,12 @@ class CategoriesController {
     }
 
     async createCategory(req, res) {
-        const saveToS3 = await UploadJPEGToS3(req.fileName, req.filePath);
-        const linkImage = saveToS3.Location;
-        await fs.unlink(path.resolve(req.filePath), (err) => {
-            if (err) {
-                return res.status(400).json({ message: err.message });
-            }
-        });
-        console.log(req.user_id);
         const payload = {
             name: req.body.name,
             global: false,
             user_id: new mongoose.Types.ObjectId(req.user_id),
             type: req.body.type,
-            image: linkImage,
+            image: req.body.image,
         };
         await categoriesServices.createCategory(payload);
         return res.status(200).json({
