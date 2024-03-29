@@ -1,5 +1,3 @@
-const { omit } = require("lodash");
-
 class ErrorWithStatus {
     message;
     status;

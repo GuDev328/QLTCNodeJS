@@ -19,8 +19,8 @@ let sendEmailForgotPassword = async (sendData) => {
         path.resolve("src/templates/forgotPassword.html"),
         "utf8"
     );
-    const link = `http://127.0.0.1:5500/reset-password?token=${sendData.token}&email=${sendData.receiverEmail}`;
-    htmlContent.replace("{{hrefResetPass}}", link);
+    const link = `http://127.0.0.1:5500/pages/ResetPassword.html?token=${sendData.token}&email=${sendData.receiverEmail}`;
+    htmlContent = htmlContent.replace("hrefResetPass", link);
 
     try {
         let info = await transporter.sendMail({

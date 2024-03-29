@@ -20,8 +20,15 @@ class UserService {
     }
 
     async register(payload) {
-        const { name, email, password, phone_number, birthday, gender } =
-            payload;
+        const {
+            name,
+            email,
+            password,
+            phone_number,
+            birthday,
+            gender,
+            address,
+        } = payload;
         const findUser = await User.findOne({ email });
         if (findUser) {
             throw new ErrorWithStatus(409, "Email đã tồn tại");
@@ -33,6 +40,7 @@ class UserService {
             email,
             password: hashPassword,
             phone_number,
+            address,
             birthday: moment.utc(birthday, "DD/MM/YYYY").toDate(),
             gender,
         });
@@ -110,6 +118,7 @@ class UserService {
                 password: password,
                 phone_number: "Chưa có số điện thoại",
                 birthday: new Date(),
+                address: "Chưa có địa chỉ",
                 gender: 1,
                 avatar: googleUserInfo.picture,
             });
@@ -153,6 +162,14 @@ class UserService {
             "-__v password -token_reset_password "
         );
         return users;
+    }
+
+    async updateProfile(payload) {
+        const user = await User.findByIdAndUpdate(payload.user_id, payload, {
+            new: true,
+        });
+        if (!user) throw new ErrorWithStatus(404, "Không tìm thấy tài khoản");
+        return user;
     }
 }
 

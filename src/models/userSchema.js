@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     token_reset_password: { type: String, required: false, default: null },
     phone_number: { type: String, required: true },
     birthday: { type: Date, required: true },
-    address: { type: String, required: true },
+    address: { type: String, required: false },
     gender: { type: Number, required: true }, // 1 for male, 0 for female
     avatar: { type: String, required: false, default: null },
 });

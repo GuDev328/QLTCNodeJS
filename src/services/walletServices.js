@@ -1,5 +1,6 @@
 const { ErrorWithStatus } = require("../utils/errorHandler");
 const Wallet = require("../models/walletSchema");
+const Spending = require("../models/spendingSchema");
 
 class WalletServices {
     async createWallet(payload) {
@@ -25,6 +26,7 @@ class WalletServices {
             throw new ErrorWithStatus(403, "Không có quyền sửa ví");
         }
         await Wallet.findByIdAndDelete(wallet_id);
+        await Spending.deleteMany({ wallet_id });
         return;
     }
 

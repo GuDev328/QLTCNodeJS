@@ -17,4 +17,10 @@ router.get(
     catchError(spendingController.getAllSpending)
 );
 
+router.post(
+    "/export-excel",
+    isLoggedIn,
+    catchError(spendingController.exportExcel)
+);
+
 module.exports = router;

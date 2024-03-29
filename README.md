@@ -52,6 +52,7 @@
 
 -   [GET]"http://localhost:3001/api/user/get-all-user"
 -   [GET]"http://localhost:3001/api/user/get-list-province"
+-   [GET]"http://localhost:3001/api/user/get-list-icon" (Các icon danh mục để cho ng dùng chọn khi tạo danh mục mới)
 
 ### Wallet Api
 
@@ -115,3 +116,10 @@
         }
 
 -   [GET]"http://localhost:3001/api/categories/get-all"
+-   [POST]"http://localhost:3001/api/spending/export-excel"
+
+    -   body: {  
+         "start_date": "1/12/2022",  
+         "end_date": "30/12/2022",  
+         "wallet_id": "65f548aabf6deeb1b38aab1f"  
+        }

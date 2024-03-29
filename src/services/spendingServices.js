@@ -4,6 +4,8 @@ const LoanDebt = require("../models/loanDebtSchema");
 const Spending = require("../models/spendingSchema");
 const Wallet = require("../models/walletSchema");
 const SpendingCategories = require("../models/spendingCategoriesSchema");
+const { ErrorWithStatus } = require("../utils/errorHandler");
+const { exportExcel } = require("../utils/excel");
 
 class SpendingServices {
     async createSpending(payload) {
@@ -68,10 +70,92 @@ class SpendingServices {
     }
 
     async getAllSpending(payload) {
-        const spending = await Spending.find({
-            wallet_id: payload.wallet_id,
+        const wallet = await Wallet.findOne({
+            _id: payload.wallet_id,
         });
+        if (!wallet) throw new ErrorWithStatus(404, "Ví không tồn tại");
+        if (wallet.user_id !== payload.user_id)
+            throw new ErrorWithStatus(
+                401,
+                "Bạn không có quyền truy cập ví này"
+            );
+        const spending = await Spending.aggregate([
+            {
+                $match: {
+                    wallet_id: payload.wallet_id,
+                },
+            },
+            {
+                $lookup: {
+                    from: "spendingcategories",
+                    localField: "category_id",
+                    foreignField: "_id",
+                    as: "category",
+                },
+            },
+        ]);
         return spending;
+    }
+
+    async exportExcel(payload) {
+        const wallet = await Wallet.findOne({
+            _id: payload.wallet_id,
+        });
+        if (!wallet) {
+            throw new ErrorWithStatus(404, "Ví không tồn tại");
+        }
+        if (String(wallet.user_id) !== String(payload.user_id)) {
+            throw new ErrorWithStatus(
+                401,
+                "Bạn không có quyền truy cập ví này"
+            );
+        }
+        const spendings = await Spending.aggregate([
+            {
+                $match: {
+                    wallet_id: payload.wallet_id,
+                    date: {
+                        $gte: new Date(payload.start_date),
+                        $lte: new Date(payload.end_date),
+                    },
+                },
+            },
+            {
+                $lookup: {
+                    from: "spendingcategories",
+                    localField: "category_id",
+                    foreignField: "_id",
+                    as: "category",
+                },
+            },
+            {
+                $lookup: {
+                    from: "wallets",
+                    localField: "wallet_id",
+                    foreignField: "_id",
+                    as: "wallet",
+                },
+            },
+        ]);
+
+        const dataExcel = [];
+        let i = 1;
+        spendings.forEach((spending) => {
+            dataExcel.push({
+                num: i,
+                wallet_name: spending.wallet[0].name,
+                catagory: spending.category[0].name,
+                money: spending.money,
+                description: spending.description,
+                with_people: spending.with_people,
+                date: spending.date,
+            });
+            i += 1;
+        });
+
+        const excelFilePath = await exportExcel(dataExcel);
+
+        return excelFilePath;
     }
 }
 
