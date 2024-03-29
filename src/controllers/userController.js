@@ -3,6 +3,9 @@ const userService = require("../services/userServices");
 const { listProvinces, listIcons } = require("../list/list");
 const { default: mongoose } = require("mongoose");
 const moment = require("moment");
+const { UploadJPEGToS3 } = require("../utils/s3");
+const fs = require("fs");
+const path = require("path");
 
 class UserController {
     async register(req, res) {
@@ -97,16 +100,21 @@ class UserController {
     }
 
     async updateProfile(req, res) {
+        const saveToS3 = await UploadJPEGToS3(req.fileName, req.avatarPath);
+        const linkImage = saveToS3.Location;
+        await fs.unlink(path.resolve(req.avatarPath), (err) => {
+            if (err) {
+                return res.status(400).json({ message: err.message });
+            }
+        });
         const payload = {
-            user_id: new mongooseTypes.ObjectId(req.user_id),
+            user_id: new mongoose.Types.ObjectId(req.user_id),
             name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
             phone_number: req.body.phone_number,
             address: req.body.address,
             birthday: moment.utc(req.body.birthday, "DD/MM/YYYY").toDate(),
             gender: req.body.gender,
-            avatar: req.body.avatar,
+            avatar: linkImage,
         };
         const result = await userService.updateProfile(payload);
         res.status(200).json({

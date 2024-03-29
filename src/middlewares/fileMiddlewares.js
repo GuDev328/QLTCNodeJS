@@ -1,18 +1,18 @@
 const upload = require("../utils/file.js");
 const path = require("path");
 
-const uploadImage = upload.single("image");
+const uploadAvatar = upload.single("avatar");
 
-const uploadImageMiddleware = (req, res, next) => {
-    uploadImage(req, res, (err) => {
+const uploadAvatarMiddleware = (req, res, next) => {
+    uploadAvatar(req, res, (err) => {
         if (err) {
             return res.status(400).json({ message: err.message });
         }
         if (req.file) {
-            req.filePath = path.resolve(req.file.path);
+            req.avatarPath = path.resolve(req.file.path);
         }
         next();
     });
 };
 
-module.exports = uploadImageMiddleware;
+module.exports = uploadAvatarMiddleware;

@@ -50,6 +50,18 @@
         "password": "123456"  
         }
 
+-   [POST]"http://localhost:3001/api/user/update-profile"
+    Lưu ý: với api này có gửi file lên server nên phải dùng formdata, chứ không phải body như bình thường
+
+    -   formdata: {  
+        "name":"Đạt",  
+        "phone_number":"12345678",  
+        "address":"Hà Nội",  
+        "birthday":"12/12/2022",  
+        "gender":1,  
+        "avatar": file ảnh  
+        }
+
 -   [GET]"http://localhost:3001/api/user/get-all-user"
 -   [GET]"http://localhost:3001/api/user/get-list-province"
 -   [GET]"http://localhost:3001/api/user/get-list-icon" (Các icon danh mục để cho ng dùng chọn khi tạo danh mục mới)

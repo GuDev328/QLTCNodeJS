@@ -1,4 +1,5 @@
 const userController = require("../controllers/userController");
+const uploadAvatarMiddleware = require("../middlewares/fileMiddlewares");
 const { isLoggedIn, isAdmin } = require("../middlewares/userMiddlewares");
 const { catchError } = require("../utils/errorHandler");
 const { Router } = require("express");
@@ -11,6 +12,7 @@ router.post("/logout", isLoggedIn, catchError(userController.logout));
 router.post(
     "/update-profile",
     isLoggedIn,
+    uploadAvatarMiddleware,
     catchError(userController.updateProfile)
 );
 router.post("/forgot-password", catchError(userController.forgotPassword));

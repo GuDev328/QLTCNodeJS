@@ -63,6 +63,5 @@ class SpendingController {
         });
     }
 }
-
 const spendingController = new SpendingController();
 module.exports = spendingController;
